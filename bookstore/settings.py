@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "order",
+    "product",
 ]
 
 MIDDLEWARE = [
@@ -116,3 +118,11 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # Ativando o DRF para a tarefa
+# REST Framework??
+INSTALLED_APPS += ['rest_framework.authtoken']
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
