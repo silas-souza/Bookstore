@@ -1,27 +1,37 @@
-from rest_framework.test import APITestCase
-from django.contrib.auth.models import User  # 👈 Importa o modelo de usuário do Django
-from product.models import Product, Category
+from django.test import TestCase
+from django.contrib.auth.models import User
+from product.models import Category, Product
 from order.models import Order
 from order.serializers import OrderSerializer
+from product.factories import CategoryFactory, ProductFactory
 
-class OrderTests(APITestCase):
-
+class OrderTests(TestCase):
     def setUp(self):
-        # 1. Cria a categoria e o produto
-        self.category = Category.objects.create(name="Ficção")
-        self.product = Product.objects.create(name="Neuromancer", price=55.00, category=self.category)
-        
-        # 2. Cria um usuário fictício para o teste
-        self.user = User.objects.create_user(username="testuser", password="password123")
-        
-        # 3. Cria a order passando o usuário obrigatório (user=self.user)
-        self.order = Order.objects.create(user=self.user)
-        
-        # 4. Adiciona o produto na relação ManyToMany do pedido
-        self.order.product.add(self.product) 
+        self.category = CategoryFactory(name='Books')
+        self.product = ProductFactory(
+            name='Test Book',
+            price=29.99,
+            category=self.category
+        )
+        self.order = Order.objects.create(
+            product=self.product,
+            quantity=2,
+            total_price=59.98
+        )
 
     def test_order_serializer_integrity(self):
-        """Valida o serializer de Pedido e sua relação com produtos"""
         serializer = OrderSerializer(self.order)
-        self.assertEqual(len(serializer.data['product']), 1)
-        self.assertEqual(serializer.data['product'][0]['name'], "Neuromancer")
+        self.assertEqual(serializer.data['quantity'], 2)
+        self.assertEqual(serializer.data['total_price'], '59.98')
+
+    def test_order_creation(self):
+        order = Order.objects.create(
+            product=self.product,
+            quantity=3,
+            total_price=89.97
+        )
+        self.assertEqual(order.quantity, 3)
+
+    def test_order_relationship_with_product(self):
+        self.assertEqual(self.order.product, self.product)
+        self.assertEqual(str(self.order), f'Order {self.order.id} - {self.product.name}')
