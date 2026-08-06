@@ -36,4 +36,4 @@ class TestProductViewSet(TestCase):
         url = reverse('product-list')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(len(response.data), 4)

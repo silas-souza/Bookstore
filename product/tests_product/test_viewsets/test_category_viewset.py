@@ -34,4 +34,4 @@ class CategoryViewSet(TestCase):
         url = reverse('category-list')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(len(response.data), 4)
