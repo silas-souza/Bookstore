@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
     'product',
-    "rest_framework",
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,13 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',  # <-- HABILITA A INTERFACE
+    ]
+}
 
 
 # Static files (CSS, JavaScript, Images)
