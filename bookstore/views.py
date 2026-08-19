@@ -1,13 +1,3 @@
-from django.http import JsonResponse, HttpResponse  # <-- ADICIONA HttpResponse
-from django.shortcuts import render
-
-def hello_world(request):
-    return JsonResponse({"message": "Hello, World!"})
-
-def update(request):
-    return JsonResponse({"status": "updated"})
-
-# ADICIONE ESTA FUNÇÃO:
 def home(request):
     return HttpResponse("""
         <!DOCTYPE html>
@@ -42,6 +32,8 @@ def home(request):
                 .links a:hover { background: #2980b9; }
                 .links a.admin { background: #e74c3c; }
                 .links a.admin:hover { background: #c0392b; }
+                .links a.order { background: #2ecc71; }
+                .links a.order:hover { background: #27ae60; }
             </style>
         </head>
         <body>
@@ -51,6 +43,7 @@ def home(request):
                 <div class="links">
                     <a href="/api/v1/product/">📦 Produtos</a>
                     <a href="/api/v1/category/">🏷️ Categorias</a>
+                    <a href="/api/v1/order/" class="order">🛒 Pedidos</a>  <!-- <-- ADICIONADO -->
                     <a href="/admin/" class="admin">🔧 Admin</a>
                     <a href="/hello/">👋 Hello World</a>
                 </div>

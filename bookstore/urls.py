@@ -14,16 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
 from rest_framework.authtoken.views import obtain_auth_token
 from bookstore import views
 
 urlpatterns = [
     path("", views.home, name="home"),
     path("admin/", admin.site.urls),
-    path("api/v1/", include("product.urls")),  # <-- MUDOU PARA api/v1/
-    path("api/v1/", include("order.urls")),    # <-- MUDOU PARA api/v1/
+    path("api/v1/", include("product.urls")),
+    path("api/v1/", include("order.urls")),
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
-    path("update_server/", views.update, name="update"),
-    path('hello/', views.hello_world, name='hello_world'),
+    # path("update_server/", views.update, name="update"),  # REMOVIDO
+    # path('hello/', views.hello_world, name='hello_world'),  # REMOVIDO
 ]
