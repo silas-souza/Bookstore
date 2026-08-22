@@ -1,3 +1,7 @@
+from django.http import HttpResponse  # <-- ADICIONE ESTA LINHA
+from django.http import JsonResponse
+from django.shortcuts import render
+
 def home(request):
     return HttpResponse("""
         <!DOCTYPE html>
