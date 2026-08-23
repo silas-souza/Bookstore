@@ -7,15 +7,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.12]  # Mantive apenas a versão 3.12, que é a que você usa
+        python-version: [3.12]
 
     runs-on: ubuntu-latest
 
+    env:  # <-- ADICIONE ESTA SEÇÃO
+      DJANGO_ALLOWED_HOSTS: "localhost 127.0.0.1"
+      SECRET_KEY: "django-insecure-1234567890"
+      DEBUG: "1"
+
     steps:
-    - uses: actions/checkout@v4  # Atualizado de v2 para v4
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5  # Atualizado de v2 para v5
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
