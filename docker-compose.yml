@@ -12,6 +12,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - bookstore-network
 
   db:
     image: postgres:15-alpine
@@ -26,6 +28,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - bookstore-network
 
 volumes:
   postgres_data:
+
+networks:
+  bookstore-network:
+    driver: bridge
